@@ -10,33 +10,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+// text controller
+  final newWorkoutNameController = TextEditingController();
+
+// create new workout
   void createNewWorkout() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Create new workout"),
-        content: TextField(),
+        title: const Text("Create new workout"),
+        content: TextField(
+          controller: newWorkoutNameController,
+        ),
         actions: [
           // save button
           MaterialButton(
             onPressed: save,
-            child: Text("Save"),
-          )
+            child: const Text("Save"),
+          ),
 
           // cancel button
-          MaterialButton(onPressed: cancel,
-          child: Text("Cancel"),)
+          MaterialButton(
+            onPressed: cancel,
+            child: const Text("Cancel"),
+          )
         ],
       ),
     );
   }
 
-
   void save() {
+    // get workout name from text controller
+    String newWorkoutName = newWorkoutNameController.text;
 
+    // add workout to workoutdata list
+    Provider.of<WorkoutData>(context, listen: false).addWorkout(newWorkoutName);
+
+// close/pop dialog box
+    Navigator.pop(context);
   }
 
-  void cancel() {}
+  void cancel() {
+// close/pop dialog box
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
