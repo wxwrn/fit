@@ -39,6 +39,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // goToWorkoutPage
+  void goToWorkoutPage(String workoutName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WorkoutPage(),
+      ),
+    );
+  }
+
   void save() {
     // get workout name from text controller
     String newWorkoutName = newWorkoutNameController.text;
@@ -48,11 +58,18 @@ class _HomePageState extends State<HomePage> {
 
 // close/pop dialog box
     Navigator.pop(context);
+    clear();
   }
 
   void cancel() {
 // close/pop dialog box
     Navigator.pop(context);
+    clear();
+  }
+
+  // clear controller
+  void clear() {
+    newWorkoutNameController.clear();
   }
 
   @override
@@ -67,7 +84,13 @@ class _HomePageState extends State<HomePage> {
         body: ListView.builder(
           itemCount: value.getWorkoutList().length,
           itemBuilder: (context, index) => ListTile(
-            title: Text(value.getWorkoutList()[index].name),
+            title: Text(
+              value.getWorkoutList()[index].name,
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.arrow_forward),
+              onPressed: goToWorkoutPage(),
+            ),
           ),
         ),
       ),
