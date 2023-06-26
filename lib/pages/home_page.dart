@@ -1,4 +1,5 @@
 import 'package:fit/data/workout_data.dart';
+import 'package:fit/pages/workout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,9 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WorkoutPage(),
+        builder: (context) => WorkoutPage(
+          workoutName: workoutName,
+        ),
       ),
     );
   }
@@ -88,8 +91,9 @@ class _HomePageState extends State<HomePage> {
               value.getWorkoutList()[index].name,
             ),
             trailing: IconButton(
-              icon: Icon(Icons.arrow_forward),
-              onPressed: goToWorkoutPage(),
+              icon: const Icon(Icons.arrow_forward),
+              onPressed: () =>
+                  goToWorkoutPage(value.getWorkoutList()[index].name),
             ),
           ),
         ),
